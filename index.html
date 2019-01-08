@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #container {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .layer {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(160deg, #ffce00 20%, #00b3ff 80%);
+      left: 0;
+      top: 0;
+      opacity: .7;
+      z-index: 9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="container"></div>
+
+  <div class="layer"></div>
+
+  <script src="js/highcharts.js"></script>
+  <!-- <script src="js/exporting.js" ></script> -->
+  <!-- <script src="js/oldie.js" ></script> -->
+  <script src="js/wordcloud.js"></script>
+
+  <script>
+    // var text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum erat ac justo sollicitudin, quis lacinia ligula fringilla. Pellentesque hendrerit, nisi vitae posuere condimentum, lectus urna accumsan libero, rutrum commodo mi lacus pretium erat. Phasellus pretium ultrices mi sed semper. Praesent ut tristique magna. Donec nisl tellus, sagittis ut tempus sit amet, consectetur eget erat. Sed ornare gravida lacinia. Curabitur iaculis metus purus, eget pretium est laoreet ut. Quisque tristique augue ac eros malesuada, vitae facilisis mauris sollicitudin. Mauris ac molestie nulla, vitae facilisis quam. Curabitur placerat ornare sem, in mattis purus posuere eget. Praesent non condimentum odio. Nunc aliquet, odio nec auctor congue, sapien justo dictum massa, nec fermentum massa sapien non tellus. Praesent luctus eros et nunc pretium hendrerit. In consequat et eros nec interdum. Ut neque dui, maximus id elit ac, consequat pretium tellus. Nullam vel accumsan lorem.';
+
+    var text =
+      `JavaScript NodeJS NodeJS  NodeJS HTML5 HTML5 HTML5 CSS3 ES6 Vue  Vue Vue Express Koa MySQL MongoDB Redis Nginx Docker Linus
+          Ubuntu Centos Debian Canvas SVG rem 响应式布局 scss less postcss gulp webpack git svn Node爬虫
+          jQuery React WebApp 微信小程序 微信公众号 css动画 js动画 js正则 http https Bootstrap D3.js Echarts
+          Highcharts Stylus Python 自定义字体 UI 数据结构和算法 设计模式 架构 weex Decloud Animate Websocket
+          socket.io Vedio Audio 图形学 Element Layer 自动化 Memcached jenkins 安全 签名sign 工具 mpvue
+          加密 ELK HybirdApp WebApp TypeScript JavaScript JavaScript JavaScript Angular Swiper iScroll mySroll zabbix wiki Kafka 发布订阅
+        `;
+
+    var data = text.split(/[,\. ]+/g)
+      .reduce(function(arr, word) {
+        var obj = arr.find(function(obj) {
+          return obj.name === word;
+        });
+        if (obj) {
+          obj.weight += 1;
+        } else {
+          obj = {
+            name: word,
+            weight: 1
+          };
+          arr.push(obj);
+        }
+        return arr;
+      }, []);
+
+    console.log(data);
+
+    Highcharts.chart('container', {
+      series: [{
+        type: 'wordcloud',
+        data: data
+      }],
+      title: {
+        text: 'JavaScript栈词云图'
+      }
+    });
+  </script>
+</body>
+
+</html>
